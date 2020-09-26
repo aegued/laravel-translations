@@ -1,6 +1,6 @@
 {
     "name": "aegued/laravel-translations",
-    "description": "Make translations fields for a Model",
+    "description": "Create translations of the fields of a Model and save them in the database",
     "license": "MIT",
     "authors": [
         {

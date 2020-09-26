@@ -13,7 +13,10 @@ class LaravelTranslationsServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->mergeConfigFrom(
+            __DIR__ . '/../publishable/config/translations.php',
+            'aegued'
+        );
     }
 
     /**
@@ -23,6 +26,7 @@ class LaravelTranslationsServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadM;
+        $this->loadMigrationsFrom(__DIR__.'/../publishable/database/migrations');
+        $this->publishes([__DIR__ . '/../publishable/config/translations.php' => config_path('translations.php')]);
     }
 }
