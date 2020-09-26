@@ -82,7 +82,7 @@ Saving translations
 
 ```php
 $item = new Item;
-$data = array('en' => 'car', 'ar' => 'سيارة');
+$data = array('en' => 'car', 'es' => 'coche');
 
 $item->setTranslations('name', $data); // setTranslations($attribute, array $translations, $save = false)
 
@@ -106,13 +106,13 @@ OR
 $item->getTranslation('city');
 
 // pass translation locales
-$item->getTranslation('city', 'ar'); // getTranslation($attribute, $language = null, $fallback = true)
-$item->getTranslationsOf('name', ['ar', 'en']); // getTranslationsOf($attribute, array $languages = null, $fallback = true)
+$item->getTranslation('city', 'es'); // getTranslation($attribute, $language = null, $fallback = true)
+$item->getTranslationsOf('name', ['es', 'en']); // getTranslationsOf($attribute, array $languages = null, $fallback = true)
 ```
 
 Delete translations
 
 ```php
 $item = new Item::first();
-$item->deleteTranslations(['name', 'color'], ['ar', 'en']); // deleteTranslations(array $attributes, $locales = null)
+$item->deleteTranslations(['name', 'color'], ['es', 'en']); // deleteTranslations(array $attributes, $locales = null)
 ```
