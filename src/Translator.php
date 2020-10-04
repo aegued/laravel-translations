@@ -5,7 +5,6 @@ namespace Aegued\LaravelTranslations;
 use ArrayAccess;
 use Illuminate\Database\Eloquent\Model;
 use Aegued\LaravelTranslations\Models\Translation;
-use phpDocumentor\Reflection\Types\Mixed_;
 
 class Translator implements ArrayAccess
 {
@@ -305,5 +304,44 @@ class Translator implements ArrayAccess
         $method = $this->model->getTranslatorMethod($method);
 
         return call_user_func_array([$this->model, $method], $arguments);
+    }
+
+    public static function getModels(): array
+    {
+        $path = app_path();
+        $output = [];
+        $results = scandir($path);
+
+        foreach ($results as $result) {
+            if ($result === '.' or $result === '..') continue;
+
+            $filename = $path . '/' . $result;
+            if (is_dir($filename)) {
+                continue;
+            }else{
+                $output[] = substr($result,0,-4);
+            }
+        }
+
+        return $output;
+    }
+
+    public static function getTranslatableModels()
+    {
+        $models = self::getModels();
+        $output = [];
+
+        foreach ($models as $model) {
+            $uses = class_uses("App\\$model");
+            $ret = array_search('Aegued\LaravelTranslations\Translatable', $uses);
+
+            if (!$ret) {
+                continue;
+            } else {
+                $output[] = $model;
+            }
+        }
+
+        return $output;
     }
 }
