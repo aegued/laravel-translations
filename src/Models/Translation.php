@@ -2,6 +2,7 @@
 
 namespace Aegued\LaravelTranslations\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Translation extends Model
@@ -9,6 +10,13 @@ class Translation extends Model
     protected $connection;
 
     protected $table = 'translations';
+
+    public function fromDateTime($value)
+    {
+        return config('database.default') === 'sqlsrv'
+            ? Carbon::createFromFormat("Y-d-m H:i:s.v", parent::fromDateTime($value))->format("Y-d-m H:i:s")
+            : $value;
+    }
 
     protected $fillable = ['table_name', 'column_name', 'foreign_key', 'locale', 'value'];
 
