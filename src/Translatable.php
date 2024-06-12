@@ -31,7 +31,7 @@ trait Translatable
         if (!in_array($key, $this->getTranslatableAttributes()))
             return parent::getAttributeValue($key);
 
-        return $this->getTranslation($key, config('app.locale'));
+        return $this->getTranslation($key, config('app.locale')) ?? parent::getAttributeValue($key);
     }
 
     /**
