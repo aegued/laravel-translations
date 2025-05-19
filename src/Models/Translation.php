@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Translation extends Model
 {
     protected $connection;
-
     protected $table = 'translations';
 
     public function fromDateTime($value)

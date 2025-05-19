@@ -216,18 +216,19 @@ trait Translatable
 
     public function setTranslation($attribute, $locale, $value, $save = false)
     {
-
         if (!$this->relationLoaded('translations'))
             $this->load('translations');
 
         $default = config('translations.locale', 'en');
 
-        if ($locale != $default) {
+        if ($locale !== $default) {
             $tranlator = $this->translate($locale, false);
             $tranlator->$attribute = $value;
+
             if ($save) {
                 $tranlator->save();
             }
+
             return $tranlator;
         }
 

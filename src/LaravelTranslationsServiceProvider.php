@@ -11,7 +11,7 @@ class LaravelTranslationsServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
         $this->mergeConfigFrom(
             __DIR__ . '/../publishable/config/translations.php',
@@ -24,9 +24,9 @@ class LaravelTranslationsServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
-        $this->loadMigrationsFrom(__DIR__.'/../publishable/database/migrations');
+        $this->loadMigrationsFrom(__DIR__ . '/../publishable/database/migrations');
         $this->publishes([__DIR__ . '/../publishable/config/translations.php' => config_path('translations.php')]);
     }
 }
