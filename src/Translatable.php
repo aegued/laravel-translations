@@ -81,10 +81,12 @@ trait Translatable
             $fallback = config('app.fallback_locale');
 
         $query->with(['translations' => function (Relation $query) use ($locale, $fallback) {
-            $query->where('locale', $locale);
+            $query->where(function ($query) use ($locale, $fallback) {
+                $query->where('locale', $locale);
 
-            if ($fallback !== false)
-                $query->orWhere('locale', $fallback);
+                if ($fallback !== false)
+                    $query->orWhere('locale', $fallback);
+            });
         }]);
     }
 
@@ -108,14 +110,17 @@ trait Translatable
             if (is_null($locales))
                 return;
 
-            if (is_array($locales)) {
-                $query->whereIn('locale', $locales);
-            } else {
-                $query->where('locale', $locales);
-            }
+            // Group locale filters so the fallback cannot escape the relation constraints.
+            $query->where(function ($query) use ($locales, $fallback) {
+                if (is_array($locales)) {
+                    $query->whereIn('locale', $locales);
+                } else {
+                    $query->where('locale', $locales);
+                }
 
-            if ($fallback !== false)
-                $query->orWhere('locale', $fallback);
+                if ($fallback !== false)
+                    $query->orWhere('locale', $fallback);
+            });
         }]);
     }
 
