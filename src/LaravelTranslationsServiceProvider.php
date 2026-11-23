@@ -15,7 +15,7 @@ class LaravelTranslationsServiceProvider extends ServiceProvider
     {
         $this->mergeConfigFrom(
             __DIR__ . '/../publishable/config/translations.php',
-            'aegued'
+            'translations'
         );
     }
 

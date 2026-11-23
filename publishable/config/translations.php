@@ -15,8 +15,8 @@ return [
 
     /**
      * Set the Database Connection
-     * By default is 'mysql'
+     * Null uses the application default connection
      */
-    'db_connection' =>  'mysql',
+    'db_connection' => null,
 
 ];
