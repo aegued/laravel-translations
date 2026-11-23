@@ -53,6 +53,11 @@ class Translator implements ArrayAccess
     public function save()
     {
         $attributes = $this->getModifiedAttributes();
+
+        // An unsaved model has no foreign key: wait until it has one instead of writing orphan rows.
+        if (count($attributes) && is_null($this->model->getKey()))
+            return true;
+
         $savings = [];
 
         foreach ($attributes as $key => $attribute) {
@@ -227,6 +232,9 @@ class Translator implements ArrayAccess
             return false;
 
         if (!in_array($key, $this->model->getTranslatableAttributes()))
+            return false;
+
+        if (is_null($this->model->getKey()))
             return false;
 
         $translation = new Translation();

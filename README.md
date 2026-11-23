@@ -82,24 +82,26 @@ Saving translations
 
 ```php
 $item = new Item;
+$item->name = 'car'; // root locale value is stored in the model column
+$item->save(); // translations need a persisted model with a primary key
+
 $data = array('en' => 'car', 'es' => 'coche');
 
-$item->setTranslations('name', $data); // setTranslations($attribute, array $translations, $save = false)
+$item->setTranslations('name', $data, true); // setTranslations($attribute, array $translations, $save = false)
 
 // or save one translation
-$item->setTranslation('name', 'en', 'car', true); // setTranslation($attribute, $locale, $value, $save = false)
+$item->setTranslation('name', 'es', 'coche', true); // setTranslation($attribute, $locale, $value, $save = false)
 
-// or just do
-$item->name = 'car'; // note: this will save automaticaly unless it's the default locale
+// or just do (non-default locales are saved immediately)
+$item->name = 'coche';
 
-// This will save if (current locale == default locale OR $save = false)
-$item->save();
+// Default-locale values stay on the model and are persisted by $item->save().
 ```
 
 Get translations
 
 ```php
-$item = new Item::first();
+$item = Item::first();
 // get current locale translation
 $item->city
 OR
@@ -113,6 +115,6 @@ $item->getTranslationsOf('name', ['es', 'en']); // getTranslationsOf($attribute,
 Delete translations
 
 ```php
-$item = new Item::first();
+$item = Item::first();
 $item->deleteTranslations(['name', 'color'], ['es', 'en']); // deleteTranslations(array $attributes, $locales = null)
 ```
