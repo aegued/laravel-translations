@@ -23,6 +23,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('translations');
+        Schema::table('translations', function (Blueprint $table) {
+            $table->dropIndex(['table_name', 'foreign_key']);
+            $table->dropIndex(['foreign_key', 'column_name', 'locale']);
+            $table->dropIndex(['locale']);
+        });
     }
 };
